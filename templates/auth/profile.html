@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}| {{ request.user.username }}{% endblock title %}
+
+{% block content %}
+    <div class="container flex justify-center items-center">
+        <div class="card mt-10 p-6 profile text-white" style="min-width: 500px">
+            <div class="mb-4 text-2xl"><b>{{ request.user.get_full_name }} - {{ request.user.username }}</b></div>
+            <ul class="mb-3">
+                <li><b>Email:</b> {{ request.user.email }}</li>
+                <li><b>Last login:</b> {{ request.user.last_login }}</li>
+                <li><b>Is Active:</b> {{ request.user.is_active }}</li>
+                <li><b>Is Superuser:</b> {{ request.user.is_superuser }}</li>
+                <li><b>Is Staff:</b> {{ request.user.is_staff }}</li>  
+            </ul>
+            <div class="text-end">
+                <a href="{% url 'change_password' %}" class="bg-green-400 rounded-xl text-black addCommentBtn">Change password</a>
+                <a href="{% url 'change_profile' %}" class="bg-amber-400 rounded-xl text-black addCommentBtn">Change profile</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

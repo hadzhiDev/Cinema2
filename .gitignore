@@ -1,0 +1,12 @@
+.idea/
+.vs_code/
+
+.DS_Store
+
+db.sqlite3
+venv/
+
+migrations
+media/
+
+errors.txt

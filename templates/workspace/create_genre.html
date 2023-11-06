@@ -1,0 +1,26 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| Create new genre{% endblock title %}
+
+{% block work_content %}
+
+    <div class="mb-4">Create new category:</div>
+    <div>
+        <form action="{% url 'workspace_create_genre' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <lable for="name_input">Name <span class="text-red-500">*</span></lable>
+                <input type="text" name="name" id="name_input"  class="" placeholder="ehgdcge">
+            </div>
+            <div>
+                <button type="submit" class="yellowBtn text-white">Create</button>
+            </div>
+            {% if message %}
+                <div class="mt-4 text-red-500 text-center">
+                    <i class="fa-solid fa-circle-exclamation"></i> {{ message }}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+
+{% endblock work_content %}

@@ -1,0 +1,42 @@
+{% extends 'workspace/base.html' %}
+{% load static %}
+
+{% block title %}| Workspace{% endblock title %}
+
+{% block work_content %}
+    <div class="container">
+        <div class="text-white">
+            <div>
+                <div class="mb-6 pt-6 text-3xl">Welcome to WorkSpace</div>
+                <div class="flex justify-between mb-4 text-2xl">
+                    <dic>Your movies:</div>
+                    <div>
+                        <a href="{% url 'workspace_add_movie' %}" class="bg-green-500 rounded-xl text-black addCommentBtn">
+                            Add movie <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="movies_cards grid grid-cols-4">
+                    {% for movie in movies_list %}
+                        <div class="card">
+                            <div class="card_image">
+                                <a class="" href="{% url 'workspace_detail_movie' id=movie.id %}">
+                                    <img src='{{ movie.image.url }}' class="" alt="">
+                                </a>
+                            </div>
+                            <div class="pt-4 pl-4 font-bold">{{movie.name}}</div>
+                            <div class="color82 text-xs pl-4 pb-3">{{movie.year}}</div>
+                            <a href="{% url 'workspace_edit_movie' id=movie.id %}" class="bg-amber-400 rounded-xl text-black addCommentBtn">Edit</a>
+                            <a href="{% url 'workspace_delete_movie' id=movie.id %}" class="bg-red-600 rounded-xl text-black addCommentBtn">Delete</a>
+                        </div>
+                    {% empty %}
+                        <div class="col-12 text-center">
+                            <h3>No News</h3>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% include 'components/movies_pagination.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock work_content %}

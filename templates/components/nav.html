@@ -1,0 +1,50 @@
+{% load static %}
+<nav>
+    <div class="container flex justify-between items-center">
+        <div class="">
+            <img src="{% static 'svg/Vilm.svg' %}" alt="">
+        </div>
+        <div class="nav_bar flex gap-10 text-lg items-center">
+            <div>
+                <a class="text-white" href="{% url 'main' %}">Home</a>
+            </div>
+            {% include 'components/genres.html' %}
+            
+            {% if not request.user.is_authenticated %}
+                <div>
+                    <a href="javascript:void(0)" onclick="loginToggle()" class="text-white" data-bs-toggle="modal" data-bs-target="#loginModalWin">Login</a>
+                </div>
+            {% else %}
+                
+            {% comment %} <div class="select" tabindex="0" role="button">
+                <button tabindex="0">Profile</button>
+                <div>
+                  <a role="button" tabindex="0" href="#"><span>View profile</span></a>
+                  <a role="button" tabindex="0" href="#"><span>Logout</span></a>
+                  <a role="button" tabindex="0" href="#"><span>VueScript</span></a>
+                </div>
+              </div> {% endcomment %}
+              <!-- Accessible -->
+              <div class="select" tabindex="0" role="button" style="--a11y: 1;--outline-color: hsla(calc(var(--accent-color-hue)*1deg) 100% 58% / calc(var(--a11y)*100%));">
+                <button tabindex="0">Profile</button>
+                <div class="text-white ">
+                    <a role="button" tabindex="0" href="{% url 'profile' %}"><span>View profile</span></a>
+                    <a role="button" tabindex="0" href="{% url 'workspace' %}"><span>Workspace</span></a>
+                    <a role="button" tabindex="0" href="javascript:void(0)" onclick="logout()"><span>Logout</span></a>
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="py-2">
+            <form class="flex" action="{% url 'main' %}" method='GET'>
+                <input class="form-control me-2" name='search' type="search" value='{{ request.GET.search }}' aria-label="search">
+                <button class="btn btn-outline-success" type="submit"><img src="{% static 'svg/nav_search.svg'%}" alt=""></button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+{% if not request.user.is_authenticated %}
+    {% include 'components/auth/login_modal.html' %}
+{% endif %}

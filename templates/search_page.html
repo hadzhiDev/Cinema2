@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="type_of_movies text-white text-4xl pt-12 pb-8 font-bold">
+        Trending Movies
+    </div>
+    <div class="movies_cards grid grid-cols-6">
+        {% for movie in movies_list %}
+            <div class="card">
+                <div class="card_image">
+                    <a class="" href="{% url 'detail' id=movie.id %}">
+                        <img src='{{ movie.image.url }}' class="" alt="">
+                    </a>
+                </div>
+                <div class="pt-4 pl-4 font-bold">{{movie.name}}</div>
+                <div class="color82 text-xs pl-4 pb-3">{{movie.year}}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

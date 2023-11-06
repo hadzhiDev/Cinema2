@@ -1,0 +1,65 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| {{ movie.name }}{% endblock title %}
+
+{% block work_content %}
+
+    <div class="mb-4">Editing movie "{{ movie.name }}"</div>
+    <div class="add_movie">
+        <form action="{% url 'workspace_edit_movie' id=movie.id%}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name_input">Name <span class="text-red-500">*</span></label>
+                <input type="text" name="name" id="name_input" value="{{ movie.name }}" required>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mb-3">
+                    <label for="image_input">Image <span class="text-red-500">*</span></label>
+                    <input type="file" name="image" id="image_input" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inner_image_input">Inner Image <span class="text-red-500">*</span></label>
+                    <input type="file" name="inner_image" id="inner_image_input" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="overview_input">Overview <span class="text-red-500">*</span></label>
+                <textarea name="overview" id="overview_input"  required class="w-full">{{ movie.overview }}</textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mb-3">
+                    <label for="rating_input">Rating <span class="text-red-500">*</span></label>
+                    <input type="number" name="rating" value="{{ movie.rating }}" id="rating_input" required>
+                </div>
+                <div class="mb-3 flex-col">
+                    <label for="year_input">Year <span class="text-red-500">*</span></label>
+                    <input type="number" name="year" value="{{ movie.year }}" id="year_input" required>
+                </div>
+            </div>
+            <div class="mb-3 flex-col">
+                <span>Genres <span class="text-red-500">*</span></span>
+                <div class="grid grid-cols-4">
+                    {% for genre in genres %}
+                        <div class="text-center">
+                            <input type="checkbox" name="genres" id="genres_{{ genre.id }}" value="{{ genre.id }}">
+                            <label for="genres_{{ genre.id }}">{{ genre.name }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-3 flex-col">
+                <label for="director_input">Director <span class="text-red-500">*</span></label>
+                <select name="director" id="director_input" class="form-select">
+                    <option>Select director</option>
+                    {% for director in directors %}
+                        <option value="{{ director.id }}" {% if director.id == movie.director.id %}selected{% endif %}>{{ director.full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="addCommentBtn bg-amber-400">Edit</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock work_content %}

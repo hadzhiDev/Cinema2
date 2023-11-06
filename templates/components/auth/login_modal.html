@@ -1,0 +1,33 @@
+<div class="login" id="loginModalWin" >
+    <div id="frame2" onclick="loginToggle()"></div>
+    <div  class="login_card" id="login_card">
+        <div class="flex justify-end pt-3.5 pr-4">
+            <a onclick="loginToggle()" href="javascript:void(0)">x</a>
+        </div>
+        <div class="p-6">
+            <form  id="login_form" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="text-center mb-6 text-xl font-medium">
+                    Sign in 
+                </div>
+                <div class="mb-4 block">
+                    <input type="text" name="username" placeholder="Enter username" class="login_input2" >
+                    <div id="login_form_error">
+                        
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <input type="password" name="password" placeholder="Enter password" class="login_input2" >
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="bg-amber-400 rounded-xl text-black addCommentBtn">Login</button>
+                </div>
+                {% if message %}
+                    <div class="mt-4 text-red text-center">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ message }}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>

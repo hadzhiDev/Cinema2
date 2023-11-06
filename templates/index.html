@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'components/header.html' %}
+<div class="container">
+    <div class="type_of_movies text-white text-4xl pt-12 pb-8 font-bold">
+        Trending Movies
+    </div>
+    <div class="">
+        <div class="">
+            {% include 'components/sidebar.html' %}
+        </div> 
+        <div class="p-10">
+            <div class="movies_cards grid grid-cols-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1" >
+                {% for movie in movies_list %}
+                    <div class="card">
+                        <div class="card_image">
+                            <a class="" href="{% url 'detail' id=movie.id %}">
+                                <img src='{{ movie.image.url }}' class="" alt="">
+                            </a>
+                        </div>
+                        <div class="pt-4 pl-4 font-bold">{{movie.name}}</div>
+                        <div class="flex justify-between items-center px-4 pb-2">
+                            <div class="color82 text-xs">{{movie.year}}</div>
+                            <div><i class="fa-solid fa-eye"></i> {{ movie.views }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if movies_list.has_previous or movies_list.has_next %}
+                <div class="flex justify-center">
+                    <ul class="pagination flex gap-2 pt-10">
+                        {% if movies_list.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?offset={{ movies_list.previous_page_number }}">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+    
+                        {% for i in movies_list.paginator.page_range %}
+                            {% if movies_list.number == i %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ i }}</span>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?offset={{ i }}">{{ i }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+    
+                        {% if movies_list.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?offset={{ movies_list.next_page_number }}">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}

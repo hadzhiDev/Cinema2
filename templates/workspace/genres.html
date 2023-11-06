@@ -1,0 +1,80 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| Genres{% endblock title %}
+
+{% block work_content %}
+    <div class="text-white pt-20">
+        <div class="flex justify-between">
+            <div class="mb-4 text-xl font-medium">Genres:</div>
+            <div>
+                 <a href="{% url 'workspace_create_genre' %}" class="addCommentBtn">
+                    Add
+                    <i class="fa-solid fa-pen-to-square"></i>
+                 </a>
+            </div>
+        </div>
+    
+        <div>
+            <div class="flex justify-between bb mb-4 pb-2">
+                <div>
+                    <b>Name</b>
+                </div>
+                <div>
+                    <b>Actions</b>
+                </div>
+            </div>
+            <div class="">
+                <div>
+                    {% for genre in genres %}
+                    <div class="flex justify-between bb mb-4 pb-2">
+                        <div>{{ genre.name }}</div>
+                        <div>
+                            <div class="flex gap-2 justify-end">
+                                <a href="{% url 'workspace_update_genre' id=genre.id %}" class="btn btn-warning">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="{% url 'workspace_delete_genre' id=genre.id %}" class="btn btn-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="">
+                {% if genres.has_previous or genres.has_next %}
+                    <div class="pagination flex gap-2 pt-10 justify-center">
+                        {% if genres.has_previous %}
+                        <div class="page-item">
+                            <a class="page-link" href="?offset={{ genres.previous_page_number }}">
+                                <i class="fa-solid fa-angle-left"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+            
+                        {% for i in genres.paginator.page_range %}
+                            {% if genres.number == i %}
+                            <div class="page-item active">
+                                <span class="page-link">{{ i }}</span>
+                            </div>
+                            {% else %}
+                                <div class="page-item">
+                                    <a class="page-link" href="?offset={{ i }}">{{ i }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+            
+                        {% if genres.has_next %}
+                            <div class="page-item">
+                                <a class="page-link" href="?offset={{ genres.next_page_number }}">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock work_content %}

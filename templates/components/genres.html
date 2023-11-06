@@ -1,0 +1,17 @@
+{% load custom_tags %}
+{% load static %}
+
+{% get_all_genres as genres %}
+
+<div class="genres_card">
+    <div>
+        <a class="text-white py-10" href="">Genre</a>
+    </div>
+    <div id="genres" class="genres hidden">
+        {% for genre in genres %}
+            <div class="genre">
+                <a href="{% url 'movies_by_genre' id=genre.id %}">{{ genre.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

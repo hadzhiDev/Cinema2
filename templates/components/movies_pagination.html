@@ -1,0 +1,33 @@
+{% if movies_list.has_previous or movies_list.has_next %}
+<div class="flex justify-center">
+    <ul class="pagination flex gap-2 pt-10">
+        {% if movies_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?offset={{ movies_list.previous_page_number }}">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for i in movies_list.paginator.page_range %}
+            {% if movies_list.number == i %}
+                <li class="page-item active">
+                    <span class="page-link">{{ i }}</span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?offset={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if movies_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?offset={{ movies_list.next_page_number }}">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
