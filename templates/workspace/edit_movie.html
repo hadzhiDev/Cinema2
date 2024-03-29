@@ -49,7 +49,7 @@
             </div>
             <div class="mb-3 flex-col">
                 <label for="director_input">Director <span class="text-red-500">*</span></label>
-                <select name="director" id="director_input" class="form-select">
+                <select name="director" id="director_input" class="form-select text-black">
                     <option>Select director</option>
                     {% for director in directors %}
                         <option value="{{ director.id }}" {% if director.id == movie.director.id %}selected{% endif %}>{{ director.full_name }}</option>

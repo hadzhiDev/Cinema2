@@ -25,7 +25,7 @@ def main(request):
     filter_set = MovieFilter(request.GET, queryset=movies)
 
     offset = request.GET.get('offset', 1)
-    limit = request.GET.get('limit', 2)
+    limit = request.GET.get('limit', 5)
     paginator = Paginator(filter_set.qs, limit)
     movies = paginator.get_page(offset)
     return render(request, 'index.html', { 'movies_list': movies, 'filter': filter_set})
@@ -53,7 +53,7 @@ def create_comment_ajax(request):
     movie_id = int(request.POST.get('movie'))
     name = request.POST.get('name')
     text = request.POST.get('text')
-    movie = get_object_or_404(Movie, id=movie_id)
+    movie = get_object_or_404(Movie, id=movie_id) 
 
     new_comment = Comment.objects.create(
         movie=movie,
@@ -99,7 +99,7 @@ def logout_profile(request):
         logout(request)
     return redirect('/')
 
-
+ 
 def profile(request):
     if request.user.is_authenticated:
         return render(request, 'auth/profile.html')

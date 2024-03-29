@@ -26,9 +26,6 @@
         </div>
         <div class="grid grid-cols-2 gap-10 pt-56 mb-10">
             <div>
-
-            </div>
-            <div>
                 <div class="mb-2 text-xl">
                     <span class="font-medium">Режиссёр фильма:</span> {{movie.director}}
                 </div>
@@ -45,72 +42,72 @@
                     <span class="font-medium">Краткое содержание фильма:</span> {{movie.overview}}
                 </div>
             </div>
-        </div>
-        <div class="comment_card">
-            <div class="text-xl font-medium mb-2">
-                Comments
-            </div>
-            <div class="">
-                <form name="createComment">
-                    {% csrf_token %}
-                    <div class="mb-2 grid grid-cols-1 ">
-                        <lable for="name_comment">Full Name <span class="text-red-700">*</span></lable>
-                        <input type="text" id="name_comment" class="h-10 rounded-xl p-2 text-black" name="name" placeholder="Enter your name" required>
-                    </div>
-                    <div class="mb-2 grid grid-cols-1">
-                        <lable for="text_comment">Comment <span class="text-red-700">*</span></lable>
-                        <textarea id="text_comment" name="text" class="rounded-xl p-2 text-black" rows="4" required></textarea>
-                    </div>
-                    <div class="text-end">
-                        <button type="submit" class="bg-amber-400 rounded-xl text-black addCommentBtn" id="addCommentBtn">Add this comment</button>
-                    </div>
-                </form>
-            </div>
-            <div id="commentContainer">
-                {% for comment in comments %}
-                <div class="p-2 mt-3 rounded-xl text-slate-800 bg-white" id="comment_block_{{ comment.id}}">
-                    <div class="flex justify-between">
-                        <div class="">{{ comment.name }}</div>
-                        <div class="text-muted text-end">{{ comment.date }}</div>
-                    </div>
-                    <p class="">{{ comment.text }}</p>
-                    <div class="text-end">
-                        <button class="bg-amber-400 rounded-xl text-black addCommentBtn" onclick="deleteComment({{ comment.id }})">Delete</button>
-                    </div>
+            <div class="comment_card">
+                <div class="text-xl font-medium mb-2">
+                    Comments
                 </div>
-                {% endfor %}
-            </div>
-            {% if comments.has_previous or comments.has_next %}
-                <div class="pagination flex gap-2 pt-10 justify-center">
-                    {% if comments.has_previous %}
-                        <div class="page-item">
-                            <a class="page-link" href="?offset={{ comments.previous_page_number }}">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </a>
+                <div class="">
+                    <form name="createComment">
+                        {% csrf_token %}
+                        <div class="mb-2 grid grid-cols-1 ">
+                            <lable for="name_comment">Full Name <span class="text-red-700">*</span></lable>
+                            <input type="text" id="name_comment" class="h-10 rounded-xl p-2 text-black" name="name" placeholder="Enter your name" required>
                         </div>
-                    {% endif %}
-        
-                    {% for i in comments.paginator.page_range %}
-                        {% if comments.number == i %}
-                        <div class="page-item active">
-                            <span class="page-link">{{ i }}</span>
+                        <div class="mb-2 grid grid-cols-1">
+                            <lable for="text_comment">Comment <span class="text-red-700">*</span></lable>
+                            <textarea id="text_comment" name="text" class="rounded-xl p-2 text-black" rows="4" required></textarea>
                         </div>
-                        {% else %}
+                        <div class="text-end">
+                            <button type="submit" class="bg-amber-400 rounded-xl text-black addCommentBtn" id="addCommentBtn">Add this comment</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="commentContainer">
+                    {% for comment in comments %}
+                    <div class="p-2 mt-3 rounded-xl text-slate-800 bg-white" id="comment_block_{{ comment.id}}">
+                        <div class="flex justify-between">
+                            <div class="">{{ comment.name }}</div>
+                            <div class="text-muted text-end">{{ comment.date }}</div>
+                        </div>
+                        <p class="">{{ comment.text }}</p>
+                        <div class="text-end">
+                            <button class="bg-red-600 rounded-xl text-black addCommentBtn" onclick="deleteComment({{ comment.id }})">Delete</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if comments.has_previous or comments.has_next %}
+                    <div class="pagination flex gap-2 pt-10 justify-center">
+                        {% if comments.has_previous %}
                             <div class="page-item">
-                                <a class="page-link" href="?offset={{ i }}">{{ i }}</a>
+                                <a class="page-link" href="?offset={{ comments.previous_page_number }}">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </a>
                             </div>
                         {% endif %}
-                    {% endfor %}
-        
-                    {% if comments.has_next %}
-                        <div class="page-item">
-                            <a class="page-link" href="?offset={{ comments.next_page_number }}">
-                                <i class="fa-solid fa-angle-right"></i>
-                            </a>
-                        </div>
-                    {% endif %}
-                </div>
-            {% endif %}
+            
+                        {% for i in comments.paginator.page_range %}
+                            {% if comments.number == i %}
+                            <div class="page-item active">
+                                <span class="page-link">{{ i }}</span>
+                            </div>
+                            {% else %}
+                                <div class="page-item">
+                                    <a class="page-link" href="?offset={{ i }}">{{ i }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+            
+                        {% if comments.has_next %}
+                            <div class="page-item">
+                                <a class="page-link" href="?offset={{ comments.next_page_number }}">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

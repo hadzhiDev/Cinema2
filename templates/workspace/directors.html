@@ -1,0 +1,80 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| Directors{% endblock title %}
+
+{% block work_content %}
+    <div class="text-white pt-20">
+        <div class="flex justify-between">
+            <div class="mb-4 text-xl font-medium">Directors:</div>
+            <div>
+                 <a href="{% url 'workspace_create_director' %}" class="addCommentBtn">
+                    Add
+                    <i class="fa-solid fa-pen-to-square"></i>
+                 </a>
+            </div>
+        </div>
+    
+        <div>
+            <div class="flex justify-between bb mb-4 pb-2">
+                <div>
+                    <b>Full Name</b>
+                </div>
+                <div>
+                    <b>Actions</b>
+                </div>
+            </div>
+            <div class="">
+                <div>
+                    {% for director in directors %}
+                    <div class="flex justify-between bb mb-4 pb-2">
+                        <div>{{ director.full_name }}</div>
+                        <div>
+                            <div class="flex gap-2 justify-end">
+                                <a href="{% url 'workspace_update_director' id=director.id %}" class="btn btn-warning">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="{% url 'workspace_delete_director' id=director.id %}" class="btn btn-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="">
+                {% if directors.has_previous or directors.has_next %}
+                    <div class="pagination flex gap-2 pt-10 justify-center">
+                        {% if directors.has_previous %}
+                        <div class="page-item">
+                            <a class="page-link" href="?offset={{ directors.previous_page_number }}">
+                                <i class="fa-solid fa-angle-left"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+            
+                        {% for i in directors.paginator.page_range %}
+                            {% if directors.number == i %}
+                            <div class="page-item active">
+                                <span class="page-link">{{ i }}</span>
+                            </div>
+                            {% else %}
+                                <div class="page-item">
+                                    <a class="page-link" href="?offset={{ i }}">{{ i }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+            
+                        {% if directors.has_next %}
+                            <div class="page-item">
+                                <a class="page-link" href="?offset={{ directors.next_page_number }}">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock work_content %}

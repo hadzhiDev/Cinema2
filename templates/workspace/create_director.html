@@ -1,16 +1,16 @@
 {% extends 'workspace/base.html' %}
 
-{% block title %}| Create new genre{% endblock title %}
+{% block title %}| Create new Director{% endblock title %}
 
 {% block work_content %}
     <div class="bg-white mt-10 profile">
-        <div class="mb-4 text-2xl">Create new genre:</div>
+        <div class="mb-4 text-2xl">Create new Director:</div>
         <div>
-            <form action="{% url 'workspace_create_genre' %}" method="POST">
+            <form action="{% url 'workspace_create_director' %}" method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <lable class="block" for="name_input">Name <span class="text-red-500">*</span></lable>
-                    <input type="text" name="name" id="name_input"  class="genre_input" placeholder="enter genre name">
+                    <lable for="name_input">Name <span class="text-red-500">*</span></lable>
+                    <input type="text" name="full_name" id="name_input"  class="genre_input" placeholder="enter director name">
                 </div>
                 <div>
                     <button type="submit" class="addCommentBtn bg-amber-400">Create</button>
@@ -23,5 +23,4 @@
             </form>
         </div>
     </div>
-
 {% endblock work_content %}

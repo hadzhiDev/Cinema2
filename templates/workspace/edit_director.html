@@ -1,16 +1,16 @@
 {% extends 'workspace/base.html' %}
 
-{% block title %}| Update the genre "{{ genre.name }}"{% endblock title %}
+{% block title %}| Update the Director "{{ director.full_name }}"{% endblock title %}
 
 {% block work_content %}
-    <div class="bg-white mt-10 profile">
-        <div class="mb-4 text-2xl">Update the genre "{{ genre.name }}":</div>
+    <div class="bg-white pt-10 mt-10 profile">
+        <div class="mb-4 text-2xl">Update the director "{{ director.full_name }}":</div>
         <div>
-            <form action="{% url 'workspace_update_genre' id=genre.id %}" method="POST">
+            <form action="{% url 'workspace_update_director' id=director.id %}" method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <lable class='block' for="name_input">Name <span class="text-red-500">*</span></lable>
-                    <input type="text" name="name" id="name_input" value="{{ genre.name }}" class="genre_input">
+                    <lable class='block' for="name_input">Name <span class="text-red-600">*</span></lable>
+                    <input type="text" name="full_name" id="name_input" value="{{ director.full_name }}" class="genre_input">
                 </div>
                 <div>
                     <button type="submit" class="addCommentBtn bg-amber-400">Save</button>

@@ -17,7 +17,7 @@ def workspace(request):
         movies = movies.filter(genres=genre)
     genres = Genre.objects.all()
     offset = request.GET.get('offset', 1)
-    limit = request.GET.get('limit', 2)
+    limit = request.GET.get('limit', 4) 
     paginator = Paginator(movies, limit)
     movies = paginator.get_page(offset)
     return render(request, 'workspace/index.html', {'movies_list': movies, 'genres': genres})
@@ -91,6 +91,7 @@ def add_movie(request):
         year = request.POST.get('year')
         image = request.FILES.get('image')
         inner_image = request.FILES.get('inner_image')
+        author = request.user 
 
         movieImageSystem = FileSystemStorage('media/images')
         movieImageSystem.save(image.name, image)
@@ -105,6 +106,7 @@ def add_movie(request):
             rating=rating,
             image=image,
             inner_image=inner_image,
+            author=author,
         )
 
         for genre in genres:
@@ -179,6 +181,51 @@ def delete_comment(request, id):
         comment.delete()
         return JsonResponse({'isDeleted': True})
     return HttpResponseForbidden()
+
+
+@required_login_custom
+def list_of_directors(request):
+    directors = Director.objects.all().order_by('-id')
+    offset = request.GET.get('offset', 1)
+    limit = request.GET.get('limit', 4)
+    paginator = Paginator(directors, limit)
+    directors = paginator.get_page(offset)
+    return render(request, 'workspace/directors.html', {'directors': directors})
+    
+
+@required_login_custom
+def create_director(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name', None)
+        if full_name is None or full_name == '':
+            return render(request, 'workspace/create_director.html', {'message': 'Name is required'})
+        director = Director.objects.create(full_name=full_name)
+        return redirect('/workspace/directors/')
+    return render(request, 'workspace/create_director.html')
+
+
+@required_login_custom
+def update_director(request, id):
+    director = get_object_or_404(Director, id=id)
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name', None)
+        if full_name is None or full_name == '':
+            return render(request, 'workspace/edit_director.html', {
+                'message': 'Name is required',
+                'director': director,
+            })
+        
+        director.full_name = full_name
+        director.save()
+        return redirect('/workspace/directors/')
+    return render(request, 'workspace/edit_director.html', {'director': director})
+
+
+@required_login_custom
+def delete_director(request, id):
+    director = get_object_or_404(Director, id=id)
+    director.delete()
+    return redirect('/workspace/directors/')
 
 
 

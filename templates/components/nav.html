@@ -1,8 +1,8 @@
-{% load static %}
+{% load static %} 
 <nav>
     <div class="container flex justify-between items-center">
         <div class="">
-            <img src="{% static 'svg/Vilm.svg' %}" alt="">
+            <div class="text-white text-3xl font-bold">HADZHI</div>
         </div>
         <div class="nav_bar flex gap-10 text-lg items-center">
             <div>
@@ -25,13 +25,16 @@
                 </div>
               </div> {% endcomment %}
               <!-- Accessible -->
-              <div class="select" tabindex="0" role="button" style="--a11y: 1;--outline-color: hsla(calc(var(--accent-color-hue)*1deg) 100% 58% / calc(var(--a11y)*100%));">
-                <button tabindex="0">Profile</button>
-                <div class="text-white ">
-                    <a role="button" tabindex="0" href="{% url 'profile' %}"><span>View profile</span></a>
-                    <a role="button" tabindex="0" href="{% url 'workspace' %}"><span>Workspace</span></a>
-                    <a role="button" tabindex="0" href="javascript:void(0)" onclick="logout()"><span>Logout</span></a>
+            <div class="slect_papa">
+                <div class="select" tabindex="0" role="button" style="--a11y: 1;--outline-color: hsla(calc(var(--accent-color-hue)*1deg) 100% 58% / calc(var(--a11y)*100%));">
+                    <button tabindex="0">Profile</button>
+                    <div class="text-white ">
+                        <a role="button" tabindex="0" href="{% url 'profile' %}"><span>View profile</span></a>
+                        <a role="button" tabindex="0" href="{% url 'workspace' %}"><span>Workspace</span></a>
+                        <a role="button" tabindex="0" href="javascript:void(0)" onclick="logout()"><span>Logout</span></a>
+                    </div>
                 </div>
+            </div>
             {% endif %}
 
         </div>

@@ -1,11 +1,13 @@
-<div class="text-white workspace_sidebar pt-20">
-    <div>
-        <a href="{% url 'workspace_genres' %}">Genres</a>
+<div>
+    <div class="text-white workspace_sidebar pt-20">
+        <div>
+            <a href="{% url 'workspace_genres' %}">Genres</a>
+        </div>
+        <div>
+            <a href="{% url 'workspace_directors' %}">Directors</a>
+        </div>
     </div>
-    <div>
-        <a href="">Directors</a>
+    <div class="p-4">
+        <a class="addCommentBtn" href="{% url 'workspace' %}">Back to workspace</a>
     </div>
-    <div>
-        <a href="">Comments</a>
-    </div>
-</div> 
+</div>

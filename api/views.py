@@ -14,6 +14,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework import status
 from rest_framework import filters
 
+from api.mixins import UltraModelViewSet
 from api.permissions import IsOwner, IsSuperAdmin, IsSuperAdminOrReadOnly
 from api.filters import MovieFilter
 from api.paginations import SimpleResultPagination
@@ -21,15 +22,14 @@ from api.serializers import GenreSerializer, DirectorSerializer, MovieSerializer
 from apps.models import Genre, Director, Movie
 
 
-class MovieReadOnlyModelViewSet(ReadOnlyModelViewSet):
+class MovieViewSet(UltraModelViewSet):
     queryset = Movie.objects.all()
-    # def get_queryset(self):
-    #     id = self.kwargs.get('id')
-    #     if not id:
-    #         return Movie.objects.all()[:3]
-    #     return Movie.objects.filter(id=id)
-    
-    serializer_class = MovieSerializer
+    serializer_classes = {
+        'list': MovieSerializer,
+        'create': AddUpdateMovieSerializer,
+        'update': AddUpdateMovieSerializer,
+        'retrieve': MovieSerializer,
+    }
     pagination_class = SimpleResultPagination
     lookup_field = 'id'
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
@@ -37,17 +37,14 @@ class MovieReadOnlyModelViewSet(ReadOnlyModelViewSet):
     search_fields = ['name', 'overview',]
     # filterset_fields = ['genres', 'director', 'author',]
     filterset_class = MovieFilter
-    permission_classes = (AllowAny,)
-
-    # @action(methods=['get'], detail=False)
-    # def genre(self, request):
-    #     genres = Genre.objects.all()
-    #     return Response({'genres': [g.name for g in genres]})
-    
-    # @action(methods=['get'], detail=True)
-    # def director(self, request, id):
-    #     director = Director.objects.get(id=id)
-    #     return Response({'director': director.full_name})
+    # permission_classes = (AllowAny,)
+    permission_classes_by_action = {
+        'list': (AllowAny,),
+        'retrieve': (AllowAny,),
+        'create': (IsAuthenticated,),
+        'update': (IsAuthenticated, IsOwner),
+        'destroy': (IsAuthenticated, IsOwner,),
+    }
 
 
 class GenreModelViewSet(ModelViewSet):
@@ -110,7 +107,7 @@ def add_movie(request):
 @api_view(['PATCH'])
 def update_movies(request, id):
     movie = get_object_or_404(Movie, id=id)
-    serializer =  AddUpdateMovieSerializer(instance=movie, data=request.data, partial=True)
+    serializer = AddUpdateMovieSerializer(instance=movie, data=request.data, partial=True)
     serializer.is_valid(raise_exception=True)
     movie = serializer.save()
     response_serializer = MovieSerializer(instance=movie, context={'request': request})
