@@ -3,7 +3,7 @@ from apps.models import Movie, Genre, Director, Comment
 
 # admin.site.register(Movie)
 
-admin.site.site_header = 'Vilm Cinema'
+admin.site.site_header = 'Hadzhi Cinema'
 admin.site.index_title = 'Моя супер админка'
 
 @admin.register(Genre)

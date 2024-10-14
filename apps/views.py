@@ -28,7 +28,7 @@ def main(request):
     limit = request.GET.get('limit', 5)
     paginator = Paginator(filter_set.qs, limit)
     movies = paginator.get_page(offset)
-    return render(request, 'index.html', { 'movies_list': movies, 'filter': filter_set})
+    return render(request, 'index.html', {'movies_list': movies, 'filter': filter_set})
 
 
 @increase_views

@@ -67,8 +67,8 @@ class Movie(TimeStampAbstractModel):
 class Comment(models.Model):
 
     class Meta:
-        verbose_name = 'Коментарий'
-        verbose_name_plural = 'Коментарий'
+        verbose_name = 'Коментаря'
+        verbose_name_plural = 'Коментарии'
     
     name = models.CharField(max_length=100, verbose_name='Имя и фамилия')
     text = models.TextField(verbose_name='текст')

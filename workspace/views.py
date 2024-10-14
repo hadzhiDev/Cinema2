@@ -95,6 +95,7 @@ def add_movie(request):
 
         movieImageSystem = FileSystemStorage('media/images')
         movieImageSystem.save(image.name, image)
+        
         movieImageSystem2 = FileSystemStorage('media/inner_images')
         movieImageSystem2.save(inner_image.name, inner_image)
 
